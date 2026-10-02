@@ -48,6 +48,30 @@ Toda implementação, revisão ou geração de código deve priorizar carregamen
 - Preserve compatibilidade com versões comuns de PHP/MySQL oferecidas por hospedagens compartilhadas; confirme o ambiente alvo antes de adotar recursos recentes.
 - Documente novas variáveis de ambiente/configuração e mantenha exemplos sem segredos.
 
+## Boas práticas de Git e branches
+
+- Nunca trabalhe nem faça commits diretamente na branch `main`. Toda alteração deve ser feita em um branch próprio, incluindo correções pequenas e documentação.
+- Antes de começar, atualize as referências remotas e crie um branch a partir da versão mais recente da `main`:
+
+```bash
+git switch main
+git pull --ff-only
+git switch -c feat/nome-curto-da-tarefa
+```
+
+- Escolha um prefixo que descreva o trabalho, por exemplo `feat/`, `fix/`, `docs/`, `refactor/` ou `perf/`. Use nomes curtos, em minúsculas e separados por hífens.
+- Faça commits pequenos, coesos e frequentes no seu branch, seguindo Conventional Commits. Revise `git status` e `git diff` antes de cada commit; não inclua arquivos gerados, credenciais, dependências instaladas ou alterações alheias à tarefa.
+- Mantenha o branch atualizado com `main`, resolva conflitos nele e publique o branch para revisão:
+
+```bash
+git fetch origin
+git rebase origin/main
+git push -u origin feat/nome-curto-da-tarefa
+```
+
+- Integre alterações à `main` por Pull Request/Merge Request após revisão e verificações apropriadas. Não faça push direto para `main` nem use commits locais nessa branch para implementar tarefas.
+- Depois da integração, sincronize `main` e remova o branch de trabalho quando não for mais necessário.
+
 ## Conventional Commits (Commits Convencionais)
 
 Escreva as mensagens de commit em português ou inglês, mantendo o tipo e o formato padronizados:
